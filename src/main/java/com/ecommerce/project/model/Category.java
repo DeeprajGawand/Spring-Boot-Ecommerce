@@ -1,6 +1,7 @@
 package com.ecommerce.project.model;
 
 public class Category {
+
     public Long getCategoryId() {
         return categoryId;
     }
@@ -23,6 +24,6 @@ public class Category {
     }
 
     private Long categoryId;
-    private String categoryName ;
+    private String categoryName;
 
 }
