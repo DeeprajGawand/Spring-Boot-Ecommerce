@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,11 +26,12 @@ public class ProductServiceImpl implements ProductService {
     private ModelMapper modelMapper;
 
     @Override
-    public ProductDTO addProduct(Long categoryId, Product product) {
+    public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
 
         Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new
                 ResourceNotFoundException("Category", "categoryId", categoryId));
 
+        Product product = modelMapper.map(productDTO, Product.class);
         product.setImage("DefaultPng");
         product.setCategory(category);
         double specialPrice = product.getPrice() - (product.getDiscount() * 0.01 * product.getPrice());
@@ -75,11 +75,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO updateProduct(Product product, Long productId) {
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
         //get the existing product from db
         Product productFromDb = productRespository.findById(productId)
                 .orElseThrow(()-> new ResourceNotFoundException("Product","productId",productId));
 
+        Product product = modelMapper.map(productDTO, Product.class);
         //update the product info with the one with request body user shared
         productFromDb.setProductName(product.getProductName());
         productFromDb.setDescription(product.getDescription());
