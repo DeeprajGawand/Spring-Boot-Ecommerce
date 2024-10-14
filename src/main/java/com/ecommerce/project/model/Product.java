@@ -23,8 +23,8 @@ public class Product {
     private String productName;
     private String image;
 
-    @NotBlank
-    @Size(min = 6, message = "Product description must contain atleast 6 characters")
+    //    @NotBlank(message = "Product description must not be blank")
+//    @Size(min = 6, message = "Product description must contain at least 6 characters")
     private String description;
     private Integer quantity;
     private double price;
